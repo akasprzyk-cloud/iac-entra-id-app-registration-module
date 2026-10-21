@@ -108,27 +108,13 @@ variable "api_scopes" {
 }
 
 variable "api_permissions" {
-  description = "API permissions requested by this application."
+  description = "API permissions requested by this application, defined by permission names."
   type = map(object({
-    resource_app_id = string
-
-    resource_access = list(object({
-      id   = string
-      type = string
-    }))
+    resource_app_id   = string
+    application_roles = optional(list(string), [])
+    delegated_scopes  = optional(list(string), [])
   }))
   default = {}
-
-  validation {
-    condition = alltrue(flatten([
-      for api in values(var.api_permissions) : [
-        for permission in api.resource_access :
-        contains(["Role", "Scope"], permission.type)
-      ]
-    ]))
-
-    error_message = "API permission type must be Role or Scope."
-  }
 }
 
 variable "validate_permission_values" {

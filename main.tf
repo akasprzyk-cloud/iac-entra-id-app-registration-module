@@ -106,7 +106,7 @@ resource "azuread_application" "this" {
   }
 
   dynamic "required_resource_access" {
-    for_each = var.api_permissions
+    for_each = local.required_resource_access
 
     content {
       resource_app_id = required_resource_access.value.resource_app_id
@@ -133,4 +133,10 @@ resource "azuread_application_identifier_uri" "api" {
 
   application_id = azuread_application.this.id
   identifier_uri = "api://${azuread_application.this.application_id}"
+}
+
+data "azuread_service_principal" "api" {
+  for_each = var.api_permissions
+
+  client_id = each.value.resource_app_id
 }
