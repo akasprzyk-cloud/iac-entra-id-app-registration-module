@@ -1,6 +1,6 @@
-output "application_id" {
+output "client_id" {
   description = "Client ID of the application registration."
-  value       = azuread_application.this.application_id
+  value       = azuread_application.this.client_id
 }
 
 output "application_object_id" {
