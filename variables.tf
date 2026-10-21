@@ -136,3 +136,9 @@ variable "validate_permission_values" {
   type        = bool
   default     = true
 }
+
+variable "expose_api" {
+  description = "Whether to configure an Application ID URI."
+  type        = bool
+  default     = false
+}

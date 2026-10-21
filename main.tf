@@ -127,3 +127,10 @@ resource "azuread_service_principal" "this" {
   client_id = azuread_application.this.client_id
   owners    = var.owners
 }
+
+resource "azuread_application_identifier_uri" "api" {
+  count = var.expose_api ? 1 : 0
+
+  application_id = azuread_application.this.id
+  identifier_uri = "api://${azuread_application.this.application_id}"
+}
