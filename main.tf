@@ -14,6 +14,11 @@ resource "azuread_application" "this" {
   owners                  = var.owners
 
   lifecycle {
+
+    ignore_changes = [
+      identifier_uris
+    ]
+
     precondition {
       condition = (
         !var.validate_permission_values ||
