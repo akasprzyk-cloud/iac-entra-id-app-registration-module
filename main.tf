@@ -121,6 +121,32 @@ resource "azuread_application" "this" {
       }
     }
   }
+
+   dynamic "web" {
+    for_each = length(var.redirect_uris.web) > 0 || var.logout_url != null ? [1] : []
+
+    content {
+      redirect_uris = var.redirect_uris.web
+
+      logout_url = var.logout_url
+    }
+  }
+
+  dynamic "single_page_application" {
+    for_each = length(var.redirect_uris.spa) > 0 ? [1] : []
+
+    content {
+      redirect_uris = var.redirect_uris.spa
+    }
+  }
+
+  dynamic "public_client" {
+    for_each = length(var.redirect_uris.public_client) > 0 ? [1] : []
+
+    content {
+      redirect_uris = var.redirect_uris.public_client
+    }
+  }
 }
 
 resource "azuread_service_principal" "this" {
