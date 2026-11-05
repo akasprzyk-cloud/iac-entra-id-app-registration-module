@@ -13,6 +13,8 @@ resource "azuread_application" "this" {
   prevent_duplicate_names = var.prevent_duplicate_names
   owners                  = var.owners
 
+  identifier_uris = var.expose_api ? ["api://${azuread_application.this.client_id}"] : []
+
   lifecycle {
     precondition {
       condition = (
@@ -129,13 +131,6 @@ resource "azuread_service_principal" "this" {
   feature_tags {
     enterprise = true
   }
-}
-
-resource "azuread_application_identifier_uri" "api" {
-  count = var.expose_api ? 1 : 0
-
-  application_id = azuread_application.this.id
-  identifier_uri = "api://${azuread_application.this.application_id}"
 }
 
 data "azuread_service_principal" "api" {
