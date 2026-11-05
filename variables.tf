@@ -128,19 +128,3 @@ variable "expose_api" {
   type        = bool
   default     = false
 }
-
-variable "redirect_uris" {
-  description = "Redirect URIs for the application."
-  type = object({
-    web           = optional(list(string), [])
-    spa           = optional(list(string), [])
-    public_client = optional(list(string), [])
-  })
-  default = {}
-}
-
-variable "logout_url" {
-  description = "Logout URL for web applications."
-  type        = string
-  default     = null
-}
