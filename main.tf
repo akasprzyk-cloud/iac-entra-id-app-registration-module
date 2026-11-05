@@ -126,6 +126,9 @@ resource "azuread_application" "this" {
 resource "azuread_service_principal" "this" {
   client_id = azuread_application.this.client_id
   owners    = var.owners
+  feature_tags {
+    enterprise = true
+  }
 }
 
 resource "azuread_application_identifier_uri" "api" {
